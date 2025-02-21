@@ -18,19 +18,16 @@ public class DifferenceScheme {
     public void classicTeylorFormulasScheme(Double epsilon, Double[] h, Double delta) {
         for (int i = 0; i < N; i++) {
             A[i] = 2. * epsilon / (h[i] + h[i + 1])/h[i];
-            System.out.println("A = " + A[i]);
-
-            B[i] = - 2. * epsilon / (h[i]+h[i+1]) /h[i+1] - (2. * epsilon / ((h[i]+h[i+1]))/h[i]) - 1./h[i+1] -  1.;
-
-            C[i] = 2. * epsilon / ((h[i] + h[i + 1]))/h[i+1] + 1./(h[i+1]);
+            B[i] = - 2. * epsilon / (h[i]+h[i+1]) /h[i+1] - (2. * epsilon / ((h[i]+h[i+1]))/h[i]) - (1.+delta)/h[i+1] -  1.;
+            C[i] = 2. * epsilon / ((h[i] + h[i + 1]))/h[i+1] + (1.+delta)/(h[i+1]);
         }
     }
 
     public void modifiedTeylorFormulasScheme(Double epsilon, Double[] h, Double delta, Double[] Phi, Double[] PhiDelta) {
         for (int i = 0; i < N; i++) {
-            A[i] = 2. * epsilon /(h[i] + h[i + 1]);
-            B[i] = 1. * h[i + 1] / ((Phi[i + 1] - Phi[i]) * h[i]) - 2. * epsilon / (h[i] * h[i + 1]) - 1. / h[i] - 1.;
-            C[i] = 2. * epsilon / (h[i + 1] * (h[i] + h[i + 1])) + 1. / h[i] - (1. * h[i + 1] * PhiDelta[i] - Phi[i]) / ((Phi[i + 1] - Phi[i]) * h[i]);
+            A[i] = 2. * epsilon / (h[i] + h[i + 1])/h[i];
+            B[i] = - 2. * epsilon / (h[i]+h[i+1]) /h[i+1] - (2. * epsilon / ((h[i]+h[i+1]))/h[i]) - (1.)/h[i+1] -  1. + (epsilon/h[i+1] - epsilon * PhiDelta[i]/Phi[i]/h[i+1]);/*(PhiDelta[i] - Phi[i])/(Phi[i+1]-Phi[i])*/;
+            C[i] = 2. * epsilon / ((h[i] + h[i + 1]))/h[i+1] + (1.)/(h[i+1]) - (epsilon/h[i+1] - epsilon * PhiDelta[i]/Phi[i]/h[i+1]);/*(PhiDelta[i] - Phi[i])/(Phi[i+1]-Phi[i])*/;
         }
     }
     public Double[] findPoints(Double[] h) {

@@ -10,11 +10,8 @@ public class ThomasMethod {
         alpha[0] = 0.;
         betta[0] = 2.;//Math.exp(-1. / epsilon);
         for (int i = 0; i < N; i++) {
-//            alpha[i+1]=B[i]/(C[i]-alpha[i]*A[i]);
-//            betta[i+1]=(A[i]*betta[i]+F[i])/(C[i]-alpha[i]*A[i]);
                         alpha[i+1]=-C[i]/(B[i]+alpha[i]*A[i]);
                         betta[i+1]=(-A[i]*betta[i]+F[i])/(B[i]+alpha[i]*A[i]);
-//            System.out.println(betta[i]);
         }
 
 
