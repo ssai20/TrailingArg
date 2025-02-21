@@ -37,13 +37,22 @@ public class ExamineSolution {
 //
 //    }
 
-    public double errorNorm(double[] u, int N, Function<Double, Double> function, double[] uzel) {
+    public Double errorNorm(Double[] u, int N, Function<Double, Double> solution, Double[] uzel) {
         List<Double> norm = new ArrayList<>();
-        double[] res = new double[N+1];
-        double norma = 0.;
+        Double[] res = new Double[N+1];
+        Double delta = 0.;
+//        Double epsilon = 1.;
+        Double norma = 0.;
+        Double[] s = new Double[N+1];
+//        for (int i=0;i<N+1;i++) {
+//            s[i] = Math.cos(Math.PI*uzel[i]/2.) + Math.exp(-uzel[i]/epsilon);
+//        }
         for (int i = 0; i < N+1; i++) {
-//            System.out.print(function.apply(uzel[i]) + " ");
-            res[i] = Math.abs(function.apply(uzel[i]) - u[i]);
+            System.out.print("sol["+i+"] = "+solution.apply(uzel[i]) + " ");
+//            System.out.print("s["+i+"] = "+s[i] + " ");
+            res[i] = Math.abs(solution.apply(uzel[i]) - u[i]);
+//            res[i] = Math.abs(s[i] - u[i]);
+            System.out.println("res["+i+"] = "+ res[i]);
         }
         System.out.println();
 

@@ -4,38 +4,38 @@ public class GridDesign {
     public GridDesign() {
     }
 
-    public static double[] ravnomSetka(int N) {
+    public static Double[] ravnomSetka(int N) {
 //        System.out.println("Uniform mesh");
-        double[] h = new double[N + 1];
+        Double[] h = new Double[N + 1];
         for (int i = 1; i < N + 1; i++) {
             h[i] = 1. / N;
         }
         return h;
     }
 
-    public static double[] setkaShishkina(double epsilon, int N) {
-        double[] h = new double[N + 1];
-        double sigma = Math.min(0.5, 4. * epsilon * Math.log(N * 1.0) / 1.);
+    public static Double[] setkaShishkina(Double epsilon, int N) {
+        Double[] h = new Double[N + 1];
+        Double sigma = Math.min(0.5, 4. * epsilon * Math.log(N * 1.) / 1.);
 
         for (int i = 0; i <= N; i++) {
-            if ((i <= N / 2.) && (i >= 1)) {
+            if ((i <= N / 2.) && (i >= 0.)) {
                 h[i] = 2. * sigma / N;
-//                System.out.println(h[i]);
+                System.out.println("h["+i+"] = "+h[i]);
             }
             if ((i <= N) && (i > N / 2.)) {
                 h[i] = 2. * (1. - sigma) / N;
-//                System.out.println(h[i]);
+                System.out.println("h["+i+"] = "+h[i]);
             }
         }
 
         return h;
     }
 
-    public static double[] setkaBakhvalova(double epsilon, int N) {
+    public static Double[] setkaBakhvalova(double epsilon, int N) {
 //        System.out.println("Bakhvalov mesh");
-        double uzelx[] = new double[N + 1];
-        double sigma1;
-        double[] h = new double[N + 1];
+        Double uzelx[] = new Double[N + 1];
+        Double sigma1;
+        Double[] h = new Double[N + 1];
         sigma1 = Math.min(0.5, (-4.) * epsilon * Math.log(epsilon) / 1.);
 //        sigma2 = min(0.5,(-2.)*epsilon*log(epsilon)/2.);
         if (epsilon > Math.exp(-1)) {

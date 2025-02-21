@@ -2,58 +2,59 @@ import java.util.ArrayList;
 import java.util.function.Function;
 
 public class DifferenceScheme {
-    double A[];
-    double B[];
-    double C[];
-    double f[];
-    int N;
+    Double A[];
+    Double B[];
+    Double C[];
+    Double f[];
+    Integer N;
     public DifferenceScheme(int N) {
         this.N = N;
-        A = new double[N + 1];
-        B = new double[N + 1];
-        C = new double[N + 1];
-        f = new double[N + 1];
+        A = new Double[N + 1];
+        B = new Double[N + 1];
+        C = new Double[N + 1];
+        f = new Double[N + 1];
     }
 
-    public void classicTeylorFormulasScheme(double epsilon, double[] h, double delta) {
+    public void classicTeylorFormulasScheme(Double epsilon, Double[] h, Double delta) {
         for (int i = 0; i < N; i++) {
-            A[i] = 2. * epsilon / (h[i]*(h[i] + h[i + 1]));
-            B[i] = 2. * epsilon *(h[i]-h[i+1])/ (h[i]*h[i+1]*(h[i] + h[i + 1])) - 1./h[i+1] -  1.;
-//            B[i] = -2. * epsilon / (h[i] + h[i + 1]) - 1. - (delta + 1.) * 1.;
-            C[i] = 2. * epsilon / (h[i+1]*(h[i] + h[i + 1]));
-//            C[i] = 2. * epsilon / (h[i + 1] * (h[i] + h[i + 1])) + (1. + delta * 1.) / h[i + 1];
+            A[i] = 2. * epsilon / (h[i] + h[i + 1])/h[i];
+            System.out.println("A = " + A[i]);
+
+            B[i] = - 2. * epsilon / (h[i]+h[i+1]) /h[i+1] - (2. * epsilon / ((h[i]+h[i+1]))/h[i]) - 1./h[i+1] -  1.;
+
+            C[i] = 2. * epsilon / ((h[i] + h[i + 1]))/h[i+1] + 1./(h[i+1]);
         }
     }
 
-    public void modifiedTeylorFormulasScheme(double epsilon, double[] h, double delta, double[] Phi, double[] PhiDelta) {
+    public void modifiedTeylorFormulasScheme(Double epsilon, Double[] h, Double delta, Double[] Phi, Double[] PhiDelta) {
         for (int i = 0; i < N; i++) {
             A[i] = 2. * epsilon /(h[i] + h[i + 1]);
             B[i] = 1. * h[i + 1] / ((Phi[i + 1] - Phi[i]) * h[i]) - 2. * epsilon / (h[i] * h[i + 1]) - 1. / h[i] - 1.;
             C[i] = 2. * epsilon / (h[i + 1] * (h[i] + h[i + 1])) + 1. / h[i] - (1. * h[i + 1] * PhiDelta[i] - Phi[i]) / ((Phi[i + 1] - Phi[i]) * h[i]);
         }
     }
-    public double[] findPoints(double[] h) {
-        double[] uzel = new double[N+1];
+    public Double[] findPoints(Double[] h) {
+        Double[] uzel = new Double[N+1];
         uzel[0] = 0.;
         for (int i = 1; i < N + 1; i++) {
             uzel[i] = uzel[i - 1] + h[i];
-//            System.out.print(uzel[i] + " ");
+            System.out.println("uzel["+i+"]" + uzel[i]);
         }
         System.out.println();
         return uzel;
     }
 
-    public void findFunction(double[] uzel, Function<Double, Double> function) {
+    public void findFunction(Double[] uzel, Function<Double, Double> function) {
         for (int i = 0; i < N + 1; i++) {
             f[i] = function.apply(uzel[i]);
         }
     }
 
-    public ArrayList<double[]> ABCF(double epsilon, double[] h, double delta, Function<Double, Double> function, int method, Function<Double, Double> Phi) {
-        ArrayList<double[]> list = new ArrayList<double[]>();
-        double[] phi = new double[N+1];
-        double[] phiDelta = new double[N+1];
-        double[] uzel = findPoints(h);
+    public ArrayList<Double[]> ABCF(Double epsilon, Double[] h, Double delta, Function<Double, Double> function, Integer method, Function<Double, Double> Phi) {
+        ArrayList<Double[]> list = new ArrayList<Double[]>();
+        Double[] phi = new Double[N+1];
+        Double[] phiDelta = new Double[N+1];
+        Double[] uzel = findPoints(h);
         for (int i = 0; i < N + 1; i++) {
             phi[i] = Phi.apply(uzel[i]);
             phiDelta[i] = Phi.apply(uzel[i]-delta);
@@ -65,6 +66,10 @@ public class DifferenceScheme {
             modifiedTeylorFormulasScheme(epsilon, h, delta, phi, phiDelta);
         }
         findFunction(uzel, function);
+        System.out.println(A[1]);
+        System.out.println(B[1]);
+        System.out.println(C[1]);
+        System.out.println(f[1]);
         list.add(A);
         list.add(B);
         list.add(C);
