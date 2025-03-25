@@ -41,11 +41,11 @@ public class ExamineSolution {
         List<Double> norm = new ArrayList<>();
         Double[] res = new Double[N+1];
         Double norma = 0.;
-        Double[] s = new Double[N+1];
+//        Double[] s = new Double[N+1];
         for (int i = 0; i < N+1; i++) {
-            System.out.print("sol["+i+"] = "+solution.apply(uzel[i]) + " ");
+//            System.out.print("sol["+i+"] = "+solution.apply(uzel[i]) + " ");
             res[i] = Math.abs(solution.apply(uzel[i]) - u[i]);
-            System.out.println("res["+i+"] = "+ res[i]);
+//            System.out.println("res["+i+"] = "+ res[i]);
         }
         System.out.println();
 
