@@ -1,0 +1,46 @@
+\documentclass[10pt,twoside]{uz_kgu}
+\usepackage{inputenc}
+\usepackage[russian]{babel}
+%\inputencoding{cp866}%(DOS)
+%\inputencoding{koi8-r}%(UNix)
+%\inputencoding{cp1251}%(Win)
+%\inputencoding{utf8}
+\newcommand{\eps}{\varepsilon}
+\begin{document}
+
+	
+	\begin{table}[!htb]
+	$	{\label {tab:cub23}  N=100, \displaystyle u(x)=e^{-x /\varepsilon}+ \cos \frac{\pi x}{2} }$, вверху - погрешность классической формулы Тейлора, снизу - погрешность модифицированной формулы Тейлора первого порядка
+		\begin{center}
+			\begin{tabular}{|l|l|l|l|l|l|l|l|}
+				\cline{1-6}  $\varepsilon$ & \multicolumn{5}{c|}{$\delta$}  \\
+				\cline{2-6} &$1$ & $10^{-2}$ & $10^{-4}$  & $10^{-6}$& $10^{-8}$\\
+				\cline{1-6}
+				$1$
+				&7.00e-01 &7.69e-05&7.69e-09&7.70e-13&4.44e-16\\
+				&1 &1.46e-04 &1.46e-08 &1.46e-12&4.44e-16  \\
+				\cline{1-6}
+				$10^{-2}$
+				&9.80e+01 &3.68e-01&4.98e-05&5.00e-09&5.00e-13\\
+				&1.40         &5.78e-03&7.83e-07&7.85e-11 &8.00e-15 \\
+				\cline{1-6}
+				$10^{-4}$
+				&1.00e+04 &1.00e+02&3.68e-01&4.98e-05&5.00e-09\\
+				&-          &-         &-            &-             &-   \\
+				\cline{1-6}
+				$10^{-6}$
+				&1.00e+06&1.00e+04&1.00e+02&3.68e-01&4.98e-05 \\
+				&-         &1.24e-04 &1.98e-08&2.63e-11&3.55e-15 \\
+				\cline{1-6}
+				$10^{-8}$
+				&1.00e+07  &1.00e+06   &1.00e+04   &9.89e+01&3.68e-01\\
+				&1 &1.23e-04 &1.24e-08&1.91e-12&2.89e-15 \\
+				\cline{1-6}
+			\end{tabular}
+		\end{center}
+	\end{table}
+	
+
+		
+		
+	\end{document}
