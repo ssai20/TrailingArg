@@ -5,9 +5,9 @@ public class TrailingArg {
     public static void main(String[] args) {
         ThomasMethod thomasMethod = new ThomasMethod();
         ExamineSolution examineSolution = new ExamineSolution();
-        Double epsilon = 1.e-08;
+        Double epsilon = 1.e-05;
         int oddsNumber = 1000;
-        Double delta = 1.e-00;//0.;//0.01*epsilon;// 0.;// 10*epsilon;
+        Double delta = 1.e-04;//0.;//0.01*epsilon;// 0.;// 10*epsilon;
         DifferenceScheme differenceScheme = new DifferenceScheme(oddsNumber);
         Function<Double, Double> solution = x -> Math.cos(Math.PI * x / 2.) + Math.exp(-x / epsilon);
         Function<Double, Double> function = x -> -Math.cos(Math.PI * x / 2.) * (Math.PI * Math.PI * epsilon / 4.) - Math.PI / 2. * Math.sin(Math.PI * x / 2.) - Math.exp((delta - x) / epsilon) - Math.cos(Math.PI * (x - delta) / 2.);
