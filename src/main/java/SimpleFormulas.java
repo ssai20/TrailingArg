@@ -93,7 +93,7 @@ public class SimpleFormulas {
     public double classicTeylorSimple(double epsilon, Double uzel[], double delta, Function<Double, Double> uDer, int N, Function<Double, Double> function) {
         double[] uNorm = new double[N + 1];
 //        for (int i = 0; i < N + 1; i++) {
-            double max = Math.abs(1. * (function.apply(0.) + delta * uDer.apply(0.) - function.apply(0. + delta)));
+        double max = Math.abs(1. * (function.apply(0.) + delta * uDer.apply(0.) - function.apply(0. + delta)));
 //        }
 //        double max = 0;
 //        for (int i = 0; i < N + 1; i++) {
@@ -103,15 +103,15 @@ public class SimpleFormulas {
     }
 
     public double modifiedTeylorSimple(double epsilon, Double uzel[], double delta, Function<Double, Double> uDer,
-                                               int N, Function<Double, Double> function, Function<Double, Double> Phi,
-                                               Function<Double, Double> PhiDer) {
+                                       int N, Function<Double, Double> function, Function<Double, Double> Phi,
+                                       Function<Double, Double> PhiDer) {
 //        double[] uNorm = new double[N + 1];
 //        for (int i = 0; i < N + 1; i++) {
 //            if (uzel[i] > delta) {
 //                function = x -> 0.;
 //            }
-            double max = Math.abs(function.apply(0.) + (uDer.apply(0.) / PhiDer.apply(0.)) * (Phi.apply(0. + delta) -
-                    Phi.apply(0.)) - function.apply(0. + delta));
+        double max = Math.abs(function.apply(0.) + (uDer.apply(0.) / PhiDer.apply(0.)) * (Phi.apply(0. + delta) -
+                Phi.apply(0.)) - function.apply(0. + delta));
 //            System.out.println(uNorm[i]);
 
 //            if (uzel[i] > delta) {
@@ -125,5 +125,21 @@ public class SimpleFormulas {
         return max;
     }
 
+    public double classicTeylorSimpleSecondDer(double epsilon, Double uzel[], double delta, Function<Double, Double> uDer, Function<Double, Double> uSecDer, int N, Function<Double, Double> function) {
+        double[] uNorm = new double[N + 1];
+        double max = Math.abs(1. * (function.apply(0.) + delta * uDer.apply(0.) + uSecDer.apply(0.)/2.*delta*delta - function.apply(0. + delta)));
+
+        return max;
+    }
+
+    public double modifiedTeylorSimpleSecondDer(double epsilon, Double uzel[], double delta, Function<Double, Double> uDer,
+                                                Function<Double, Double> uSecDer,
+                                                int N, Function<Double, Double> function, Function<Double, Double> Phi,
+                                                Function<Double, Double> PhiDer, Function<Double, Double> PhiDerSec) {
+
+        double max = Math.abs(function.apply(0.) + uDer.apply(0.) * delta + (Phi.apply(0. + delta) - (Phi.apply(0.) + PhiDer.apply(0.)*delta)) * uSecDer.apply(0.) / PhiDerSec.apply(0.) - function.apply(0. + delta));
+
+        return max;
+    }
 }
 

@@ -1,20 +1,23 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.function.Function;
 
 public class TrailingArg {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         ThomasMethod thomasMethod = new ThomasMethod();
         ExamineSolution examineSolution = new ExamineSolution();
-        Double epsilon = 1.e-05;
-        int oddsNumber = 1000;
-        Double delta = 1.e-04;//0.;//0.01*epsilon;// 0.;// 10*epsilon;
+        Double epsilon = 1.e-04;
+        int oddsNumber = 100;
+        Double delta = 1.e-05;//0.;//0.01*epsilon;// 0.;// 10*epsilon;
         DifferenceScheme differenceScheme = new DifferenceScheme(oddsNumber);
         Function<Double, Double> solution = x -> Math.cos(Math.PI * x / 2.) + Math.exp(-x / epsilon);
         Function<Double, Double> function = x -> -Math.cos(Math.PI * x / 2.) * (Math.PI * Math.PI * epsilon / 4.) - Math.PI / 2. * Math.sin(Math.PI * x / 2.) - Math.exp((delta - x) / epsilon) - Math.cos(Math.PI * (x - delta) / 2.);
         Function<Double, Double> Phi = x -> Math.exp(-x / epsilon);
         Function<Double, Double> PhiDer = x -> -Math.exp(-x / epsilon) / epsilon;
+        Function<Double, Double> PhiSecDer = x -> Math.exp(-x / epsilon) / epsilon / epsilon;
         Function<Double, Double> uSimple = x -> Math.exp(-x / epsilon) + Math.cos(Math.PI * x / 2.);
         Function<Double, Double> uSimpleDer = x -> -Math.exp(-x / epsilon) / epsilon - Math.PI * Math.sin(Math.PI * x / 2.) / 2.;
+        Function<Double, Double> uSimpleSecDer = x -> Math.exp(-x / epsilon) / epsilon / epsilon -  Math.PI * Math.PI * Math.cos(Math.PI * x / 2.) / 4.;
         Double h[] = GridDesign.setkaShishkina(epsilon, oddsNumber);
         Double hSimple[] = GridDesign.ravnomSetka(oddsNumber);
         Double[] uzelSimple = differenceScheme.findPoints(h);
@@ -33,9 +36,29 @@ public class TrailingArg {
 
 //        System.out.println("error STRAIGHT equation with Teylor classic formulas = " + simpleFormulas.classicTeylorForExpStraight(epsilon, uzelSimple, delta, uSimpleDer, oddsNumber, uSimple));
 //        System.out.println("error STRAIGHT equation with Teylor modified formulas = " + simpleFormulas.modifiedTeylorForExpStraight(epsilon, uzelSimple, delta, uSimpleDer, oddsNumber, uSimple, Phi, PhiDer));
-        System.out.println("error STRAIGHT SIMPLE equation with Teylor classic formulas = " + simpleFormulas.classicTeylorForExpStraight(epsilon, uzelSimple, delta, uSimpleDer, oddsNumber, uSimple));
-        System.out.println("error STRAIGHT SIMPLE equation with Teylor modified formulas = " + simpleFormulas.modifiedTeylorForExpStraight(epsilon, uzelSimple, delta, uSimpleDer, oddsNumber, uSimple, Phi, PhiDer));
+        System.out.println("error STRAIGHT SIMPLE equation with Teylor classic formulas = " + simpleFormulas.classicTeylorSimple(epsilon, uzelSimple, delta, uSimpleDer, oddsNumber, uSimple));
+        System.out.println("error STRAIGHT SIMPLE equation with Teylor modified formulas = " + simpleFormulas.modifiedTeylorSimple(epsilon, uzelSimple, delta, uSimpleDer, oddsNumber, uSimple, Phi, PhiDer));
 
+        System.out.println("error STRAIGHT SIMPLE equation with Teylor classic formulas Second derivative = " + simpleFormulas.classicTeylorSimpleSecondDer(epsilon, uzelSimple, delta, uSimpleDer, uSimpleSecDer, oddsNumber, uSimple));
+        System.out.println("error STRAIGHT SIMPLE equation with Teylor modified formulas Second derivative = " + simpleFormulas.modifiedTeylorSimpleSecondDer(epsilon, uzelSimple, delta, uSimpleDer, uSimpleSecDer, oddsNumber, uSimple, Phi, PhiDer, PhiSecDer));
+
+        double[] a = new double[5];
+        double[] b = new double[5];
+        for (int i=0;i<5;i++) {
+            a[i] = simpleFormulas.classicTeylorSimpleSecondDer(epsilon, uzelSimple, delta, uSimpleDer, uSimpleSecDer, oddsNumber, uSimple);
+            b[i] = simpleFormulas.modifiedTeylorSimpleSecondDer(epsilon, uzelSimple, delta, uSimpleDer, uSimpleSecDer, oddsNumber, uSimple, Phi, PhiDer, PhiSecDer);
+        }
+        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/abc.tex");
+
+        latex.latexHeadDocument();
+
+        latex.latexTableInitial();
+
+//        latex.latexTable(a ,b);
+        latex.latexTableEnd();
+
+        latex.latexEndDocument();
+        latex.compileAndOpenPDFFile();
     }
 
 }

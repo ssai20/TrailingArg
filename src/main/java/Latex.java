@@ -2,9 +2,11 @@ import java.io.*;
 
 public class Latex {
     public String fileLocation;
-    public Latex (String fileLocation) {
+
+    public Latex(String fileLocation) {
         this.fileLocation = fileLocation;
     }
+
     //import java.io.*;
     //import java.sql.*;
     //import java.util.Scanner;
@@ -281,9 +283,9 @@ public class Latex {
     //        latexEnd();
     //    }
     //
-        public void latexInitial (){
-            File file = new File(fileLocation);
-            String title = "";
+    public void latexTableInitial() {
+        File file = new File(fileLocation);
+        String title = "abc";
 //            if (tableCode==TableCode.CLASSIC){
 //                title = title.concat("Погрешность классической формулы \\\\для вычисления");
 //            }
@@ -297,81 +299,82 @@ public class Latex {
 //            if (orderCode == OrderCode.FIRST){title = title.concat(" первой производной в "+ node + " точках при ");}
 //            if (orderCode == OrderCode.SECOND){title = title.concat(" второй производной в "+ node + " точках при ");}
 //            title = title.concat(F);
-            try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true),  "UTF-8"))){
-                bw.write("\\begin{table} [!htb]");
-                bw.newLine();
-                bw.write("    \\caption {" + title +"}");
-                bw.newLine();
-                bw.write("        \\begin{center}");
-                bw.newLine();
-                bw.write("\\begin{tabular}{c|c|c|c|c|c|c}");
-                bw.newLine();
-                bw.write("\\hline $\\varepsilon$ & \\multicolumn{6}{c}{$N$} \\\\");
-                bw.newLine();
-                bw.write("\\cline{2-7}& $32$&$64$& $128$&$256$&$512$&$1024$ \\\\");
-                bw.newLine();
-            } catch (IOException e1){
-                e1.printStackTrace();
-            }
-    //        System.out.println("Данные отправлены в файл: "+fileOutPath);
-
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true), "UTF-8"))) {
+            bw.write("\\begin{table} [!htb]");
+            bw.newLine();
+            bw.write("    \\caption {" + title + "}");
+            bw.newLine();
+            bw.write("        \\begin{center}");
+            bw.newLine();
+            bw.write("\\begin{tabular}{c|c|c|c|c|c|c}");
+            bw.newLine();
+            bw.write("\\hline $\\varepsilon$ & \\multicolumn{6}{c}{$N$} \\\\");
+            bw.newLine();
+            bw.write("\\cline{2-7}& $32$&$64$& $128$&$256$&$512$&$1024$ \\\\");
+            bw.newLine();
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
+        //        System.out.println("Данные отправлены в файл: "+fileOutPath);
+
+    }
 
 
-        public void latexTable(String[][] residual, String[][] oa) throws FileNotFoundException, UnsupportedEncodingException {
-            File file = new File(fileLocation);
-            try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true), "UTF-8"))) {
-                bw.write("\\hline $1$&$".concat(residual[0][0]) + "$&$".concat(residual[0][1]) + "$&$".concat(residual[0][2]) + "$&$".concat(residual[0][3]) + "$& $".concat(residual[0][4]) + "$& $".concat(residual[0][5]) + "$\\\\");
-                bw.newLine();
-                bw.write("$o.a.$ &".concat(oa[0][1]) + "&".concat(oa[0][2]) + "& ".concat(oa[0][3]) + "&".concat(oa[0][4]) + "&".concat(oa[0][5]) + "&\\\\");
-                bw.newLine();
-                bw.write("$16^{-1}$&$".concat(residual[1][0]) + "$&$".concat(residual[1][1]) + "$&$".concat(residual[1][2]) + "$&$".concat(residual[1][3]) + "$&$".concat(residual[1][4]) + "$& $".concat(residual[1][5]) + "$\\\\");
-                bw.newLine();
-                bw.write("$o.a.$&".concat(oa[1][1]) + "&".concat(oa[1][2]) + "&".concat(oa[0][3]) + "&".concat(oa[0][4]) + "&".concat(oa[0][5]) + "&\\\\");
-                bw.newLine();
-                bw.write("$32^{-1}$&$".concat(residual[2][0]) + "$&$".concat(residual[2][1]) + "$&$".concat(residual[2][2]) + "$&$".concat(residual[2][3]) + "$&$".concat(residual[2][4]) + "$& $".concat(residual[2][5]) + "$\\\\");
-                bw.newLine();
-                bw.write("$o.a.$&".concat(oa[2][1]) + "&".concat(oa[2][2]) + "&".concat(oa[2][3]) + "&".concat(oa[2][4]) + "&".concat(oa[2][5]) + "&\\\\");
-                bw.newLine();
-                bw.write("$64^{-1}$&$".concat(residual[3][0]) + "$&$".concat(residual[3][1]) + "$&$".concat(residual[3][2]) + "$&$".concat(residual[3][3]) + "$&$".concat(residual[3][4]) + "$& $".concat(residual[3][5]) + "$\\\\");
-                bw.newLine();
-                bw.write("$o.a.$&".concat(oa[3][1]) + "&".concat(oa[3][2]) + "&".concat(oa[3][3]) + "&".concat(oa[3][4]) + "&".concat(oa[3][5]) + "&\\\\");
-                bw.newLine();
-                bw.write("$128^{-1}$&$".concat(residual[4][0]) + "$&$".concat(residual[4][1]) + "$&$".concat(residual[4][2]) + "$&$".concat(residual[4][3]) + "$&$".concat(residual[4][4]) + "$ & $".concat(residual[4][5]) + "$\\\\");
-                bw.newLine();
-                bw.write("$o.a.$&".concat(oa[4][1]) + "&".concat(oa[4][2]) + "&".concat(oa[4][3]) + "&".concat(oa[4][4]) + "&".concat(oa[4][5]) + "&  \\\\");
-                bw.newLine();
-                bw.write("$256^{-1}$&$".concat(residual[5][0]) + "$&$".concat(residual[5][1]) + "$&$".concat(residual[5][2]) + "$&$".concat(residual[5][3]) + "$&$".concat(residual[5][4]) + "$& $".concat(residual[5][5]) + "$\\\\");
-                bw.newLine();
-                bw.write("$o.a.$&".concat(oa[5][1]) + "&".concat(oa[5][2]) + "&".concat(oa[5][3]) + "&".concat(oa[5][4]) + "&".concat(oa[5][5]) + "&\\\\");
-                bw.newLine();
-                bw.write("$512^{-1}$&$".concat(residual[6][0]) + "$&$".concat(residual[6][1]) + "$&$".concat(residual[6][2]) + "$&$".concat(residual[6][3]) + "$&$".concat(residual[6][4]) + "$& $".concat(residual[6][5]) + "$\\\\");
-                bw.newLine();
-                bw.write("$o.a.$&".concat(oa[6][1]) + "&".concat(oa[6][2]) + "&".concat(oa[6][3]) + "&".concat(oa[6][4]) + "&".concat(oa[6][5]) + "&\\\\");
-                bw.newLine();
+    public void latexTable(String[][] residual, String[][] oa) throws FileNotFoundException, UnsupportedEncodingException {
+        File file = new File(fileLocation);
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true), "UTF-8"))) {
+            bw.write("\\hline $1$&$".concat(residual[0][0]) + "$&$".concat(residual[0][1]) + "$&$".concat(residual[0][2]) + "$&$".concat(residual[0][3]) + "$& $".concat(residual[0][4]) + "$& $".concat(residual[0][5]) + "$\\\\");
+            bw.newLine();
+            bw.write("$o.a.$ &".concat(oa[0][1]) + "&".concat(oa[0][2]) + "& ".concat(oa[0][3]) + "&".concat(oa[0][4]) + "&".concat(oa[0][5]) + "&\\\\");
+            bw.newLine();
+            bw.write("$16^{-1}$&$".concat(residual[1][0]) + "$&$".concat(residual[1][1]) + "$&$".concat(residual[1][2]) + "$&$".concat(residual[1][3]) + "$&$".concat(residual[1][4]) + "$& $".concat(residual[1][5]) + "$\\\\");
+            bw.newLine();
+            bw.write("$o.a.$&".concat(oa[1][1]) + "&".concat(oa[1][2]) + "&".concat(oa[0][3]) + "&".concat(oa[0][4]) + "&".concat(oa[0][5]) + "&\\\\");
+            bw.newLine();
+            bw.write("$32^{-1}$&$".concat(residual[2][0]) + "$&$".concat(residual[2][1]) + "$&$".concat(residual[2][2]) + "$&$".concat(residual[2][3]) + "$&$".concat(residual[2][4]) + "$& $".concat(residual[2][5]) + "$\\\\");
+            bw.newLine();
+            bw.write("$o.a.$&".concat(oa[2][1]) + "&".concat(oa[2][2]) + "&".concat(oa[2][3]) + "&".concat(oa[2][4]) + "&".concat(oa[2][5]) + "&\\\\");
+            bw.newLine();
+            bw.write("$64^{-1}$&$".concat(residual[3][0]) + "$&$".concat(residual[3][1]) + "$&$".concat(residual[3][2]) + "$&$".concat(residual[3][3]) + "$&$".concat(residual[3][4]) + "$& $".concat(residual[3][5]) + "$\\\\");
+            bw.newLine();
+            bw.write("$o.a.$&".concat(oa[3][1]) + "&".concat(oa[3][2]) + "&".concat(oa[3][3]) + "&".concat(oa[3][4]) + "&".concat(oa[3][5]) + "&\\\\");
+            bw.newLine();
+            bw.write("$128^{-1}$&$".concat(residual[4][0]) + "$&$".concat(residual[4][1]) + "$&$".concat(residual[4][2]) + "$&$".concat(residual[4][3]) + "$&$".concat(residual[4][4]) + "$ & $".concat(residual[4][5]) + "$\\\\");
+            bw.newLine();
+            bw.write("$o.a.$&".concat(oa[4][1]) + "&".concat(oa[4][2]) + "&".concat(oa[4][3]) + "&".concat(oa[4][4]) + "&".concat(oa[4][5]) + "&  \\\\");
+            bw.newLine();
+            bw.write("$256^{-1}$&$".concat(residual[5][0]) + "$&$".concat(residual[5][1]) + "$&$".concat(residual[5][2]) + "$&$".concat(residual[5][3]) + "$&$".concat(residual[5][4]) + "$& $".concat(residual[5][5]) + "$\\\\");
+            bw.newLine();
+            bw.write("$o.a.$&".concat(oa[5][1]) + "&".concat(oa[5][2]) + "&".concat(oa[5][3]) + "&".concat(oa[5][4]) + "&".concat(oa[5][5]) + "&\\\\");
+            bw.newLine();
+            bw.write("$512^{-1}$&$".concat(residual[6][0]) + "$&$".concat(residual[6][1]) + "$&$".concat(residual[6][2]) + "$&$".concat(residual[6][3]) + "$&$".concat(residual[6][4]) + "$& $".concat(residual[6][5]) + "$\\\\");
+            bw.newLine();
+            bw.write("$o.a.$&".concat(oa[6][1]) + "&".concat(oa[6][2]) + "&".concat(oa[6][3]) + "&".concat(oa[6][4]) + "&".concat(oa[6][5]) + "&\\\\");
+            bw.newLine();
 
 
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-            public void latexEnd(){
-                File file = new File(fileLocation);
-                try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true),  "UTF-8"))){
-                bw.write("\\hline");
-                bw.newLine();
-                bw.write("        \\end{tabular}");
-                bw.newLine();
-                bw.write("    \\end{center}");
-                bw.newLine();
-                bw.write("\\end{table}");
-                bw.newLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+    }
+
+    public void latexTableEnd() {
+        File file = new File(fileLocation);
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true), "UTF-8"))) {
+            bw.write("\\hline");
+            bw.newLine();
+            bw.write("        \\end{tabular}");
+            bw.newLine();
+            bw.write("    \\end{center}");
+            bw.newLine();
+            bw.write("\\end{table}");
+            bw.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
     //
     //}
     //public class ZX {
@@ -530,7 +533,8 @@ public class Latex {
     //////            System.out.println(proizvPogranSloiU[i]);
     ////        }
     //
-    ///*
+
+    /// *
     //
     //    //вычисление второй производной в 3 точках:
     //        for (int i=1;i<=L-1;i=i+2){
@@ -642,72 +646,72 @@ public class Latex {
     //        return maxNorm;
     //    }
     //
-        public void latexHeadDocument(){
-            File file = new File(fileLocation);
-            try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true),  "UTF-8"))){
+    public void latexHeadDocument() {
+        File file = new File(fileLocation);
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true), "UTF-8"))) {
 
-                bw.write("\\documentclass[14pt,a4paper]{extarticle}");
-                bw.newLine();
-                bw.write("\\usepackage{bm}");
-                bw.newLine();
-                bw.write("%\\usepackage[cp1251]{inputenc}    % Перешли на кодировку Windows!!!");
-                bw.newLine();
-                bw.write("\\usepackage[utf8]{inputenc}");
-                bw.newLine();
-                bw.write("\\usepackage[english, russian]{babel}    % Переносы через Babel (обязательно!)");
-                bw.newLine();
-                bw.write("\\usepackage{setspace,amsmath}");
-                bw.newLine();
-                bw.write("\\usepackage[left=15mm, top=20mm, right=15mm, bottom=30mm]{geometry} % настройки полей документа");
-                bw.newLine();
-                bw.write("\\usepackage{amssymb}");
-                bw.newLine();
-                bw.write("\\usepackage{longtable}%для работы с длинными таблицами");
-                bw.newLine();
-                bw.write("\\onehalfspacing");
-                bw.newLine();
-                bw.write("\\newcommand{\\eps}{\\varepsilon}");
-                bw.newLine();
-                bw.write("\\newcommand{\\Oh}[1] {{\\mathcal O} \\left(#1\\right)}");
-                bw.newLine();
-                bw.write("\\newcommand{\\specialcell}[2][c]{%");
-                bw.newLine();
-                bw.write("\\begin{tabular}[#1]{@{}c@{}}#2\\end{tabular}}");
-                bw.newLine();
-                bw.write("\\renewcommand{\\baselinestretch}{1.2}");
-                bw.newLine();
-                bw.write("\\begin{document}");
-                bw.newLine();
-            } catch (IOException e1){
-                e1.printStackTrace();
-            }
+            bw.write("\\documentclass[14pt,a4paper]{extarticle}");
+            bw.newLine();
+            bw.write("\\usepackage{bm}");
+            bw.newLine();
+            bw.write("%\\usepackage[cp1251]{inputenc}    % Перешли на кодировку Windows!!!");
+            bw.newLine();
+            bw.write("\\usepackage[utf8]{inputenc}");
+            bw.newLine();
+            bw.write("\\usepackage[english, russian]{babel}    % Переносы через Babel (обязательно!)");
+            bw.newLine();
+            bw.write("\\usepackage{setspace,amsmath}");
+            bw.newLine();
+            bw.write("\\usepackage[left=15mm, top=20mm, right=15mm, bottom=30mm]{geometry} % настройки полей документа");
+            bw.newLine();
+            bw.write("\\usepackage{amssymb}");
+            bw.newLine();
+            bw.write("\\usepackage{longtable}%для работы с длинными таблицами");
+            bw.newLine();
+            bw.write("\\onehalfspacing");
+            bw.newLine();
+            bw.write("\\newcommand{\\eps}{\\varepsilon}");
+            bw.newLine();
+            bw.write("\\newcommand{\\Oh}[1] {{\\mathcal O} \\left(#1\\right)}");
+            bw.newLine();
+            bw.write("\\newcommand{\\specialcell}[2][c]{%");
+            bw.newLine();
+            bw.write("\\begin{tabular}[#1]{@{}c@{}}#2\\end{tabular}}");
+            bw.newLine();
+            bw.write("\\renewcommand{\\baselinestretch}{1.2}");
+            bw.newLine();
+            bw.write("\\begin{document}");
+            bw.newLine();
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
+    }
 
-        public void latexEndDocument(){
-            File file = new File(fileLocation);
-            try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true),  "UTF-8"))){
-                bw.newLine();
-                bw.write("\\end{document}");
-            } catch (IOException e1){
-                e1.printStackTrace();
-            }
+    public void latexEndDocument() {
+        File file = new File(fileLocation);
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true), "UTF-8"))) {
+            bw.newLine();
+            bw.write("\\end{document}");
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
+    }
 
-        public void compileAndOpenPDFFile () throws IOException {
-            String pdfFile = fileLocation.replace("tex","pdf");
-            String directoryOfFile = fileLocation.substring(0, fileLocation.lastIndexOf("/")+1);
-    //        String[] command = {"pdflatex", "--output-directory=/home/funforces/Articles/NewArticleDerivative/ForScientificSupervisor/", fileLocation};
-            String[] command = {"pdflatex", "--output-directory=".concat(directoryOfFile), fileLocation};
-            Process process = Runtime.getRuntime().exec(command);
-            process.getInputStream().transferTo(System.out);
-            process.getErrorStream().transferTo(System.out);
-            process.destroy();
-            String[] command2 = {"open", pdfFile};
-            Process process2 = Runtime.getRuntime().exec(command2);
-            process2.getInputStream().transferTo(System.out);
-            process2.getErrorStream().transferTo(System.out);
-            process2.destroy();
-        }
+    public void compileAndOpenPDFFile() throws IOException {
+        String pdfFile = fileLocation.replace(".tex", ".pdf");
+        String directoryOfFile = fileLocation.substring(0, fileLocation.lastIndexOf("/") + 1);
+        //        String[] command = {"pdflatex", "--output-directory=/home/funforces/Articles/NewArticleDerivative/ForScientificSupervisor/", fileLocation};
+        String[] command = {"pdflatex", "--output-directory=".concat(directoryOfFile), fileLocation};
+        Process process = Runtime.getRuntime().exec(command);
+        process.getInputStream().transferTo(System.out);
+        process.getErrorStream().transferTo(System.out);
+        process.destroy();
+        String[] command2 = {"open", pdfFile};
+        Process process2 = Runtime.getRuntime().exec(command2);
+        process2.getInputStream().transferTo(System.out);
+        process2.getErrorStream().transferTo(System.out);
+        process2.destroy();
+    }
     //    public static void main(String[] args) throws IOException, InterruptedException {
     //
     //        JDBCSolutionBase.DataBase("select count(*) from solution");

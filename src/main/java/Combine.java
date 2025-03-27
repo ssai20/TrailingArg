@@ -18,7 +18,7 @@ public class Combine {
             //double epsilon = 1./1.;
     //        int node = 5;
     //        Derivative firstDerivative = new Derivative(node, x -> Math.cos(Math.PI * x) + Math.exp(-x/(epsilon)), x -> -Math.PI*Math.sin(Math.PI*x) - Math.exp(-x/epsilon)/epsilon, x -> Math.exp(-x/epsilon), x -> -Math.exp(-x/epsilon)/epsilon);
-            latex.latexInitial();
+            latex.latexTableInitial();
             int kRes=0;
             int kOa=0;
             Double delta = 0.;
@@ -46,6 +46,6 @@ public class Combine {
                 if (eps==1.) eps = 8;
             }
 //            latexTable(residual, oac);
-            latex.latexEnd();
+            latex.latexTableEnd();
         }
 }
