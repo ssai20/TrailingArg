@@ -17,7 +17,7 @@ public class TrailingArg {
         Function<Double, Double> PhiSecDer = x -> Math.exp(-x / epsilon) / epsilon / epsilon;
         Function<Double, Double> uSimple = x -> Math.exp(-x / epsilon) + Math.cos(Math.PI * x / 2.);
         Function<Double, Double> uSimpleDer = x -> -Math.exp(-x / epsilon) / epsilon - Math.PI * Math.sin(Math.PI * x / 2.) / 2.;
-        Function<Double, Double> uSimpleSecDer = x -> Math.exp(-x / epsilon) / epsilon / epsilon -  Math.PI * Math.PI * Math.cos(Math.PI * x / 2.) / 4.;
+        Function<Double, Double> uSimpleSecDer = x -> Math.exp(-x / epsilon) / epsilon / epsilon - Math.PI * Math.PI * Math.cos(Math.PI * x / 2.) / 4.;
         Double h[] = GridDesign.setkaShishkina(epsilon, oddsNumber);
         Double hSimple[] = GridDesign.ravnomSetka(oddsNumber);
         Double[] uzelSimple = differenceScheme.findPoints(h);
@@ -42,19 +42,45 @@ public class TrailingArg {
         System.out.println("error STRAIGHT SIMPLE equation with Teylor classic formulas Second derivative = " + simpleFormulas.classicTeylorSimpleSecondDer(epsilon, uzelSimple, delta, uSimpleDer, uSimpleSecDer, oddsNumber, uSimple));
         System.out.println("error STRAIGHT SIMPLE equation with Teylor modified formulas Second derivative = " + simpleFormulas.modifiedTeylorSimpleSecondDer(epsilon, uzelSimple, delta, uSimpleDer, uSimpleSecDer, oddsNumber, uSimple, Phi, PhiDer, PhiSecDer));
 
-        double[] a = new double[5];
-        double[] b = new double[5];
-        for (int i=0;i<5;i++) {
-            a[i] = simpleFormulas.classicTeylorSimpleSecondDer(epsilon, uzelSimple, delta, uSimpleDer, uSimpleSecDer, oddsNumber, uSimple);
-            b[i] = simpleFormulas.modifiedTeylorSimpleSecondDer(epsilon, uzelSimple, delta, uSimpleDer, uSimpleSecDer, oddsNumber, uSimple, Phi, PhiDer, PhiSecDer);
+        String[][] classic = new String[5][5];
+        String[][] modified = new String[5][5];
+        double a;
+        double b;
+        int i = 0;
+        for (double e = 1; e >= 1.e-04; e = e / 10.) {
+            int j = 0;
+            for (double d = 1.e-01; d >= 1.e-05; d = d / 10.) {
+                double finalE = e;
+//                Function<Double, Double> solution = x -> Math.cos(Math.PI * x / 2.) + Math.exp(-x / epsilon);
+//                Function<Double, Double> function = x -> -Math.cos(Math.PI * x / 2.) * (Math.PI * Math.PI * epsilon / 4.) - Math.PI / 2. * Math.sin(Math.PI * x / 2.) - Math.exp((delta - x) / epsilon) - Math.cos(Math.PI * (x - delta) / 2.);
+                Function<Double, Double> Phi2 = x -> Math.exp(-x / finalE);
+                Function<Double, Double> PhiDer2 = x -> -Math.exp(-x / finalE) / finalE;
+                Function<Double, Double> PhiSecDer2 = x -> Math.exp(-x / finalE) / finalE / finalE;
+                Function<Double, Double> uSimple2 = x -> Math.exp(-x / finalE) + Math.cos(Math.PI * x / 2.);
+                Function<Double, Double> uSimpleDer2 = x -> -Math.exp(-x / finalE) / finalE - Math.PI * Math.sin(Math.PI * x / 2.) / 2.;
+                Function<Double, Double> uSimpleSecDer2 = x -> Math.exp(-x / finalE) / finalE / finalE - Math.PI * Math.PI * Math.cos(Math.PI * x / 2.) / 4.;
+
+
+
+                a = simpleFormulas.classicTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2);
+                b = simpleFormulas.modifiedTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2, Phi2, PhiDer2, PhiSecDer2);
+                classic[i][j] = String.format("%6.2e", a).replace(",", ".");
+                modified[i][j] = String.format("%6.2e", b).replace(",", ".");
+                System.out.println("i = "+i+"j = "+j+" = "+modified[i][j]);
+                j++;
+            }
+            i++;
         }
-        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/abc.tex");
 
+
+
+        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/abc14.tex");
         latex.latexHeadDocument();
-
+//        latex.latexTable(classic,modified);
         latex.latexTableInitial();
 
-//        latex.latexTable(a ,b);
+        latex.latexTable(classic, modified);
+
         latex.latexTableEnd();
 
         latex.latexEndDocument();
