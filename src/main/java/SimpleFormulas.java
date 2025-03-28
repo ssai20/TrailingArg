@@ -90,7 +90,8 @@ public class SimpleFormulas {
         return max;
     }
 
-    public double classicTeylorSimple(double epsilon, Double uzel[], double delta, Function<Double, Double> uDer, int N, Function<Double, Double> function) {
+    public double classicTeylorSimple(double epsilon, Double uzel[], double delta, Function<Double, Double> uDer,
+                                      int N, Function<Double, Double> function) {
         double[] uNorm = new double[N + 1];
 //        for (int i = 0; i < N + 1; i++) {
         double max = Math.abs(1. * (function.apply(0.) + delta * uDer.apply(0.) - function.apply(0. + delta)));

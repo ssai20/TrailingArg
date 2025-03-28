@@ -64,6 +64,8 @@ public class TrailingArg {
 
                 a = simpleFormulas.classicTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2);
                 b = simpleFormulas.modifiedTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2, Phi2, PhiDer2, PhiSecDer2);
+//                a = simpleFormulas.classicTeylorSimple(e, uzelSimple, d, uSimpleDer2, oddsNumber, uSimple2);
+//                b = simpleFormulas.modifiedTeylorSimple(e, uzelSimple, d, uSimpleDer2, oddsNumber, uSimple2, Phi2, PhiDer2);
                 classic[i][j] = String.format("%6.2e", a).replace(",", ".");
                 modified[i][j] = String.format("%6.2e", b).replace(",", ".");
                 System.out.println("i = "+i+"j = "+j+" = "+modified[i][j]);
@@ -74,7 +76,7 @@ public class TrailingArg {
 
 
 
-        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/abc14.tex");
+        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/Oh2.tex");
         latex.latexHeadDocument();
 //        latex.latexTable(classic,modified);
         latex.latexTableInitial();
