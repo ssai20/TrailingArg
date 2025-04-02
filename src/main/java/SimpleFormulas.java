@@ -103,16 +103,17 @@ public class SimpleFormulas {
         return max;
     }
 
-    public double modifiedTeylorSimple(double epsilon, Double uzel[], double delta, Function<Double, Double> uDer,
+    public double modifiedTeylorSimple(double epsilon, Double uzel[], double delta, Function<Double, Double> uDer, Function<Double, Double> uSecDer,
                                        int N, Function<Double, Double> function, Function<Double, Double> Phi,
-                                       Function<Double, Double> PhiDer) {
+                                       Function<Double, Double> PhiDer, Function<Double, Double> PhiDerSec) {
 //        double[] uNorm = new double[N + 1];
 //        for (int i = 0; i < N + 1; i++) {
 //            if (uzel[i] > delta) {
 //                function = x -> 0.;
 //            }
-        double max = Math.abs(function.apply(0.) + (uDer.apply(0.) / PhiDer.apply(0.)) * (Phi.apply(0. + delta) -
-                Phi.apply(0.)) - function.apply(0. + delta));
+//        double max = Math.abs(function.apply(0.) + uDer.apply(0.) * delta + (uSecDer.apply(0.) / PhiDerSec.apply(0.)) * (Phi.apply(0. + delta) -
+//               -Phi.apply(0.) - PhiDer.apply(0.)*delta) - function.apply(0. + delta));
+        double max = Math.abs(function.apply(0.) + uDer.apply(0.) * delta + ((Phi.apply(0. + delta) - Phi.apply(0.) - PhiDer.apply(0.)*delta)) * uSecDer.apply(0.) / PhiDerSec.apply(0.) - function.apply(0. + delta));
 //            System.out.println(uNorm[i]);
 
 //            if (uzel[i] > delta) {
@@ -134,11 +135,27 @@ public class SimpleFormulas {
     }
 
     public double modifiedTeylorSimpleSecondDer(double epsilon, Double uzel[], double delta, Function<Double, Double> uDer,
-                                                Function<Double, Double> uSecDer,
+                                                Function<Double, Double> uSecDer, Function<Double, Double> uThiDer,
                                                 int N, Function<Double, Double> function, Function<Double, Double> Phi,
-                                                Function<Double, Double> PhiDer, Function<Double, Double> PhiDerSec) {
+                                                Function<Double, Double> PhiDer, Function<Double, Double> PhiDerSec, Function<Double, Double> PhiDerThi) {
 
-        double max = Math.abs(function.apply(0.) + uDer.apply(0.) * delta + (Phi.apply(0. + delta) - (Phi.apply(0.) + PhiDer.apply(0.)*delta)) * uSecDer.apply(0.) / PhiDerSec.apply(0.) - function.apply(0. + delta));
+        double max = Math.abs(function.apply(0.) + uDer.apply(0.) * delta + uSecDer.apply(0.)*delta*delta/2.+ ((Phi.apply(0. + delta) - Phi.apply(0.) - PhiDer.apply(0.)*delta) )  *uThiDer.apply(0.)/ PhiDerThi.apply(0.) -  PhiDerSec.apply(0.)  *uThiDer.apply(0.)*delta/2./ PhiDerThi.apply(0.)*delta - function.apply(0. + delta));
+//        double term1 = function.apply(0.);
+//        double term2 = uDer.apply(0.) * delta;
+//        double term3 = uSecDer.apply(0.) * delta * delta * 0.5;
+//
+//        double phiDelta = Phi.apply(0. + delta);
+//        double phi0 = Phi.apply(0.);
+//        double phiDerTerm = PhiDer.apply(0.) * delta;
+//        double phiSecTerm = PhiDerSec.apply(0.) * delta * delta * 0.5;
+//        double phiResidual = (phiDelta - phi0) - phiDerTerm - phiSecTerm;
+//
+//        double coeff = uThiDer.apply(0.) / PhiDerThi.apply(0.);
+//        double term4 = phiResidual * coeff;
+//
+//        double term5 = function.apply(0. + delta);
+//
+//        double max = Math.abs(term1 + term2 + term3 + term4 - term5);
 
         return max;
     }

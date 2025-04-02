@@ -36,11 +36,11 @@ public class TrailingArg {
 
 //        System.out.println("error STRAIGHT equation with Teylor classic formulas = " + simpleFormulas.classicTeylorForExpStraight(epsilon, uzelSimple, delta, uSimpleDer, oddsNumber, uSimple));
 //        System.out.println("error STRAIGHT equation with Teylor modified formulas = " + simpleFormulas.modifiedTeylorForExpStraight(epsilon, uzelSimple, delta, uSimpleDer, oddsNumber, uSimple, Phi, PhiDer));
-        System.out.println("error STRAIGHT SIMPLE equation with Teylor classic formulas = " + simpleFormulas.classicTeylorSimple(epsilon, uzelSimple, delta, uSimpleDer, oddsNumber, uSimple));
-        System.out.println("error STRAIGHT SIMPLE equation with Teylor modified formulas = " + simpleFormulas.modifiedTeylorSimple(epsilon, uzelSimple, delta, uSimpleDer, oddsNumber, uSimple, Phi, PhiDer));
-
-        System.out.println("error STRAIGHT SIMPLE equation with Teylor classic formulas Second derivative = " + simpleFormulas.classicTeylorSimpleSecondDer(epsilon, uzelSimple, delta, uSimpleDer, uSimpleSecDer, oddsNumber, uSimple));
-        System.out.println("error STRAIGHT SIMPLE equation with Teylor modified formulas Second derivative = " + simpleFormulas.modifiedTeylorSimpleSecondDer(epsilon, uzelSimple, delta, uSimpleDer, uSimpleSecDer, oddsNumber, uSimple, Phi, PhiDer, PhiSecDer));
+//        System.out.println("error STRAIGHT SIMPLE equation with Teylor classic formulas = " + simpleFormulas.classicTeylorSimple(epsilon, uzelSimple, delta, uSimpleDer, oddsNumber, uSimple));
+//        System.out.println("error STRAIGHT SIMPLE equation with Teylor modified formulas = " + simpleFormulas.modifiedTeylorSimple(epsilon, uzelSimple, delta, uSimpleDer, oddsNumber, uSimple, Phi, PhiDer));
+//
+//        System.out.println("error STRAIGHT SIMPLE equation with Teylor classic formulas Second derivative = " + simpleFormulas.classicTeylorSimpleSecondDer(epsilon, uzelSimple, delta, uSimpleDer, uSimpleSecDer, oddsNumber, uSimple));
+//        System.out.println("error STRAIGHT SIMPLE equation with Teylor modified formulas Second derivative = " + simpleFormulas.modifiedTeylorSimpleSecondDer(epsilon, uzelSimple, delta, uSimpleDer, uSimpleSecDer, oddsNumber, uSimple, Phi, PhiDer, PhiSecDer));
 
         String[][] classic = new String[5][5];
         String[][] modified = new String[5][5];
@@ -56,16 +56,18 @@ public class TrailingArg {
                 Function<Double, Double> Phi2 = x -> Math.exp(-x / finalE);
                 Function<Double, Double> PhiDer2 = x -> -Math.exp(-x / finalE) / finalE;
                 Function<Double, Double> PhiSecDer2 = x -> Math.exp(-x / finalE) / finalE / finalE;
+                Function<Double, Double> PhiThiDer2 = x -> -Math.exp(-x / finalE) / finalE / finalE/ finalE;
                 Function<Double, Double> uSimple2 = x -> Math.exp(-x / finalE) + Math.cos(Math.PI * x / 2.);
                 Function<Double, Double> uSimpleDer2 = x -> -Math.exp(-x / finalE) / finalE - Math.PI * Math.sin(Math.PI * x / 2.) / 2.;
                 Function<Double, Double> uSimpleSecDer2 = x -> Math.exp(-x / finalE) / finalE / finalE - Math.PI * Math.PI * Math.cos(Math.PI * x / 2.) / 4.;
+                Function<Double, Double> uSimpleThiDer2 = x -> -Math.exp(-x / finalE) / finalE / finalE/ finalE + Math.PI *Math.PI * Math.PI * Math.sin(Math.PI * x / 2.) / 8.;
 
 
 
-//                a = simpleFormulas.classicTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2);
-//                b = simpleFormulas.modifiedTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2, Phi2, PhiDer2, PhiSecDer2);
-                a = simpleFormulas.classicTeylorSimple(e, uzelSimple, d, uSimpleDer2, oddsNumber, uSimple2);
-                b = simpleFormulas.modifiedTeylorSimple(e, uzelSimple, d, uSimpleDer2, oddsNumber, uSimple2, Phi2, PhiDer2);
+                a = simpleFormulas.classicTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2);
+                b = simpleFormulas.modifiedTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, uSimpleThiDer2, oddsNumber, uSimple2, Phi2, PhiDer2, PhiSecDer2, PhiThiDer2);
+//                a = simpleFormulas.classicTeylorSimple(e, uzelSimple, d, uSimpleDer2, oddsNumber, uSimple2);
+//                b = simpleFormulas.modifiedTeylorSimple(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2, Phi2, PhiDer2, PhiSecDer2);
                 classic[i][j] = String.format("%6.2e", a).replace(",", ".");
                 modified[i][j] = String.format("%6.2e", b).replace(",", ".");
                 System.out.println("i = "+i+"j = "+j+" = "+modified[i][j]);
@@ -76,8 +78,8 @@ public class TrailingArg {
 
 
 
-////        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/Oh2.tex");
-        Latex latex = new Latex("/Users/work/Desktop/Аспирантура/Programms/TrailingArgByTeylorModificationFormulas/latex/Oh1.tex");
+        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/Op03.tex");
+//        Latex latex = new Latex("/Users/work/Desktop/Аспирантура/Programms/TrailingArgByTeylorModificationFormulas/latex/Oh1.tex");
         latex.latexHeadDocument();
 
         latex.latexTableInitial();
