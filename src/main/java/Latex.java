@@ -283,9 +283,9 @@ public class Latex {
     //        latexEnd();
     //    }
     //
-    public void latexTableInitial() {
+    public void latexTableInitial(String title) {
         File file = new File(fileLocation);
-        String title = "abc";
+//        String title = "abc";
 //            if (tableCode==TableCode.CLASSIC){
 //                title = title.concat("Погрешность классической формулы \\\\для вычисления");
 //            }

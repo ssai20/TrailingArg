@@ -53,21 +53,32 @@ public class TrailingArg {
                 double finalE = e;
 //                Function<Double, Double> solution = x -> Math.cos(Math.PI * x / 2.) + Math.exp(-x / epsilon);
 //                Function<Double, Double> function = x -> -Math.cos(Math.PI * x / 2.) * (Math.PI * Math.PI * epsilon / 4.) - Math.PI / 2. * Math.sin(Math.PI * x / 2.) - Math.exp((delta - x) / epsilon) - Math.cos(Math.PI * (x - delta) / 2.);
-                Function<Double, Double> Phi2 = x -> Math.exp(-x / finalE);
-                Function<Double, Double> PhiDer2 = x -> -Math.exp(-x / finalE) / finalE;
-                Function<Double, Double> PhiSecDer2 = x -> Math.exp(-x / finalE) / finalE / finalE;
-                Function<Double, Double> PhiThiDer2 = x -> -Math.exp(-x / finalE) / finalE / finalE/ finalE;
-                Function<Double, Double> uSimple2 = x -> Math.exp(-x / finalE) + Math.cos(Math.PI * x / 2.);
-                Function<Double, Double> uSimpleDer2 = x -> -Math.exp(-x / finalE) / finalE - Math.PI * Math.sin(Math.PI * x / 2.) / 2.;
-                Function<Double, Double> uSimpleSecDer2 = x -> Math.exp(-x / finalE) / finalE / finalE - Math.PI * Math.PI * Math.cos(Math.PI * x / 2.) / 4.;
-                Function<Double, Double> uSimpleThiDer2 = x -> -Math.exp(-x / finalE) / finalE / finalE/ finalE + Math.PI *Math.PI * Math.PI * Math.sin(Math.PI * x / 2.) / 8.;
+//                Function<Double, Double> Phi2 = x -> Math.exp(-x / finalE);
+//                Function<Double, Double> PhiDer2 = x -> -Math.exp(-x / finalE) / finalE;
+//                Function<Double, Double> PhiSecDer2 = x -> Math.exp(-x / finalE) / finalE / finalE;
+//                Function<Double, Double> PhiThiDer2 = x -> -Math.exp(-x / finalE) / finalE / finalE/ finalE;
+
+//                Function<Double, Double> Phi2 = x -> Math.sqrt(x+finalE);
+//                Function<Double, Double> PhiDer2 = x -> 0.5/Math.sqrt(x +finalE);
+//                Function<Double, Double> PhiSecDer2 = x -> (-0.25)/(x+finalE)/Math.sqrt(x +finalE);
+//                Function<Double, Double> PhiThiDer2 = x -> 3./8./(x+finalE)*(x+finalE)/Math.sqrt(x +finalE);
+
+                Function<Double, Double> Phi2 = x->Math.log(x+finalE);
+                Function<Double, Double> PhiDer2 = x -> 1./(x+finalE);
+                Function<Double, Double> PhiSecDer2 = x -> -1./(x+finalE)/(x+finalE);
+                Function<Double, Double> PhiThiDer2 = x -> 2./(x+finalE)/(x+finalE)/(x+finalE);
+
+                Function<Double, Double> uSimple2 = x -> Phi2.apply(x) + Math.cos(Math.PI * x / 2.);
+                Function<Double, Double> uSimpleDer2 = x -> PhiDer2.apply(x) - Math.PI * Math.sin(Math.PI * x / 2.) / 2.;
+                Function<Double, Double> uSimpleSecDer2 = x -> PhiSecDer2.apply(x) - Math.PI * Math.PI * Math.cos(Math.PI * x / 2.) / 4.;
+                Function<Double, Double> uSimpleThiDer2 = x -> PhiThiDer2.apply(x) + Math.PI *Math.PI * Math.PI * Math.sin(Math.PI * x / 2.) / 8.;
 
 
 
-                a = simpleFormulas.classicTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2);
-                b = simpleFormulas.modifiedTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, uSimpleThiDer2, oddsNumber, uSimple2, Phi2, PhiDer2, PhiSecDer2, PhiThiDer2);
-//                a = simpleFormulas.classicTeylorSimple(e, uzelSimple, d, uSimpleDer2, oddsNumber, uSimple2);
-//                b = simpleFormulas.modifiedTeylorSimple(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2, Phi2, PhiDer2, PhiSecDer2);
+//                a = simpleFormulas.classicTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2);
+//                b = simpleFormulas.modifiedTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, uSimpleThiDer2, oddsNumber, uSimple2, Phi2, PhiDer2, PhiSecDer2, PhiThiDer2);
+                a = simpleFormulas.classicTeylorSimple(e, uzelSimple, d, uSimpleDer2, oddsNumber, uSimple2);
+                b = simpleFormulas.modifiedTeylorSimple(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2, Phi2, PhiDer2, PhiSecDer2);
                 classic[i][j] = String.format("%6.2e", a).replace(",", ".");
                 modified[i][j] = String.format("%6.2e", b).replace(",", ".");
                 System.out.println("i = "+i+"j = "+j+" = "+modified[i][j]);
@@ -78,11 +89,11 @@ public class TrailingArg {
 
 
 
-        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/Op03.tex");
-//        Latex latex = new Latex("/Users/work/Desktop/Аспирантура/Programms/TrailingArgByTeylorModificationFormulas/latex/Oh1.tex");
+//        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/logx_Oh2_3.tex");
+        Latex latex = new Latex("/Users/work/Desktop/Аспирантура/Programms/TrailingArgByTeylorModificationFormulas/latex/Oh1.tex");
         latex.latexHeadDocument();
 
-        latex.latexTableInitial();
+        latex.latexTableInitial("logx");
 
         latex.latexTable(classic, modified);
 
