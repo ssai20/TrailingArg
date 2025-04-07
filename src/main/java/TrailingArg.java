@@ -73,10 +73,11 @@ public class TrailingArg {
                 Function<Double, Double> uSimpleSecDer2 = x -> PhiSecDer2.apply(x) - Math.PI * Math.PI * Math.cos(Math.PI * x / 2.) / 4.;
                 Function<Double, Double> uSimpleThiDer2 = x -> PhiThiDer2.apply(x) + Math.PI *Math.PI * Math.PI * Math.sin(Math.PI * x / 2.) / 8.;
 
+                a = simpleFormulas.classicTrailingTeylorSimple(e, uzelSimple, d, uSimpleDer2, oddsNumber, uSimple2);
+                b = simpleFormulas.modifiedTrailingTeylorSimple(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2, Phi2, PhiDer2, PhiSecDer2);
 
-
-                a = simpleFormulas.classicTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2);
-                b = simpleFormulas.modifiedTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, uSimpleThiDer2, oddsNumber, uSimple2, Phi2, PhiDer2, PhiSecDer2, PhiThiDer2);
+//                a = simpleFormulas.classicTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2);
+//                b = simpleFormulas.modifiedTeylorSimpleSecondDer(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, uSimpleThiDer2, oddsNumber, uSimple2, Phi2, PhiDer2, PhiSecDer2, PhiThiDer2);
 //                a = simpleFormulas.classicTeylorSimple(e, uzelSimple, d, uSimpleDer2, oddsNumber, uSimple2);
 //                b = simpleFormulas.modifiedTeylorSimple(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2, Phi2, PhiDer2, PhiSecDer2);
                 classic[i][j] = String.format("%6.2e", a).replace(",", ".");
@@ -89,8 +90,8 @@ public class TrailingArg {
 
 
 
-//        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/logx_Oh2_3.tex");
-        Latex latex = new Latex("/Users/work/Desktop/Аспирантура/Programms/TrailingArgByTeylorModificationFormulas/latex/Oh1001.tex");
+        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/Oh2004.tex");
+//        Latex latex = new Latex("/Users/work/Desktop/Аспирантура/Programms/TrailingArgByTeylorModificationFormulas/latex/Oh2001.tex");
         latex.latexHeadDocument();
 
         latex.latexTableInitial("logx");
@@ -100,7 +101,7 @@ public class TrailingArg {
         latex.latexTableEnd();
 
         latex.latexEndDocument();
-//        latex.compileAndOpenPDFFile();
+        latex.compileAndOpenPDFFile();
     }
 
 }
