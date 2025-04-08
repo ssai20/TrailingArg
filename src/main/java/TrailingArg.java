@@ -53,15 +53,15 @@ public class TrailingArg {
                 double finalE = e;
 //                Function<Double, Double> solution = x -> Math.cos(Math.PI * x / 2.) + Math.exp(-x / epsilon);
 //                Function<Double, Double> function = x -> -Math.cos(Math.PI * x / 2.) * (Math.PI * Math.PI * epsilon / 4.) - Math.PI / 2. * Math.sin(Math.PI * x / 2.) - Math.exp((delta - x) / epsilon) - Math.cos(Math.PI * (x - delta) / 2.);
-//                Function<Double, Double> Phi2 = x -> Math.exp(-x / finalE);
-//                Function<Double, Double> PhiDer2 = x -> -Math.exp(-x / finalE) / finalE;
-//                Function<Double, Double> PhiSecDer2 = x -> Math.exp(-x / finalE) / finalE / finalE;
-//                Function<Double, Double> PhiThiDer2 = x -> -Math.exp(-x / finalE) / finalE / finalE/ finalE;
+                Function<Double, Double> Phi2 = x -> Math.exp(-x / finalE);
+                Function<Double, Double> PhiDer2 = x -> -Math.exp(-x / finalE) / finalE;
+                Function<Double, Double> PhiSecDer2 = x -> Math.exp(-x / finalE) / finalE / finalE;
+                Function<Double, Double> PhiThiDer2 = x -> -Math.exp(-x / finalE) / finalE / finalE/ finalE;
 
-                Function<Double, Double> Phi2 = x -> Math.sqrt(x+finalE);
-                Function<Double, Double> PhiDer2 = x -> 0.5/Math.sqrt(x +finalE);
-                Function<Double, Double> PhiSecDer2 = x -> (-0.25)/(x+finalE)/Math.sqrt(x +finalE);
-                Function<Double, Double> PhiThiDer2 = x -> 3./8./(x+finalE)*(x+finalE)/Math.sqrt(x +finalE);
+//                Function<Double, Double> Phi2 = x -> Math.sqrt(x+finalE);
+//                Function<Double, Double> PhiDer2 = x -> 0.5/Math.sqrt(x +finalE);
+//                Function<Double, Double> PhiSecDer2 = x -> (-0.25)/(x+finalE)/Math.sqrt(x +finalE);
+//                Function<Double, Double> PhiThiDer2 = x -> 3./8./(x+finalE)*(x+finalE)/Math.sqrt(x +finalE);
 
 //                Function<Double, Double> Phi2 = x->Math.log(x+finalE);
 //                Function<Double, Double> PhiDer2 = x -> 1./(x+finalE);
@@ -90,7 +90,7 @@ public class TrailingArg {
 
 
 
-        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/Oh2004.tex");
+        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/Oh2008.tex");
 //        Latex latex = new Latex("/Users/work/Desktop/Аспирантура/Programms/TrailingArgByTeylorModificationFormulas/latex/Oh2001.tex");
         latex.latexHeadDocument();
 
