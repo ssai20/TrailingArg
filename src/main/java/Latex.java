@@ -308,9 +308,9 @@ public class Latex {
             bw.newLine();
             bw.write("\\begin{tabular}{|c|c|c|c|c|c|c}");
             bw.newLine();
-            bw.write("\\cline{1-6} $\\varepsilon$ & \\multicolumn{5}{c|}{$\\delta$} \\\\");
+            bw.write("\\cline{1-6} $\\varepsilon$ & \\multicolumn{5}{c|}{$N$} \\\\");
             bw.newLine();
-            bw.write("\\cline{2-6} &$10^{-1}$ & $10^{-2}$ & $10^{-3}$  & $10^{-4}$& $10^{-5}$\\\\");
+            bw.write("\\cline{2-6} &$128 $ & $256$ & $512$  & $1024$& $2048$\\\\");
 //            bw.newLine();
 //            bw.write("\\cline{2-6}& $32$&$64$& $128$&$256$&$512$&$1024$ \\\\");
             bw.newLine();

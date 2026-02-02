@@ -4,24 +4,37 @@ public class SimpleFormulas {
     public SimpleFormulas() {
     }
 
-    public double classicTeylorForExp(double epsilon, Double uzel[], double delta, Function<Double, Double> uDer, int N, Function<Double, Double> function) {
-        double[] uNorm = new double[N + 1];
-        for (int i = 0; i < N + 1; i++) {
-            if (uzel[i] > delta) {
-                function = x -> 0.;
-            }
-            uNorm[i] = Math.abs(1. * (function.apply(uzel[i]) - delta * uDer.apply(uzel[i]) - function.apply(uzel[i] - delta)));
-//            uNorm[i] = epsilon * (function.apply(uzel[i]) - delta*uDer.apply(uzel[i]) + delta*delta/(2.*epsilon*epsilon)* function.apply(uzel[i]) - function.apply(uzel[i] - delta));
+//    public double classicTeylorForExp(double epsilon, Double uzel[], double delta, Function<Double, Double> uDer, int N, Function<Double, Double> function) {
+//        double[] uNorm = new double[N + 1];
+//        for (int i = 0; i < N + 1; i++) {
+//            if (uzel[i] > delta) {
+//                function = x -> 0.;
+//            }
+//            uNorm[i] = Math.abs(1. * (function.apply(uzel[i]) - delta * uDer.apply(uzel[i]) - function.apply(uzel[i] - delta)));
+////            uNorm[i] = epsilon * (function.apply(uzel[i]) - delta*uDer.apply(uzel[i]) + delta*delta/(2.*epsilon*epsilon)* function.apply(uzel[i]) - function.apply(uzel[i] - delta));
+//
+//            if (uzel[i] <= delta) {
+//                uNorm[i] = 0.;
+//            }
+//        }
+//        double max = 0;
+//        for (int i = 0; i < N + 1; i++) {
+//            if (uNorm[i] > max) max = uNorm[i];
+//        }
+//        return max;
+//    }
+    public double classicTeylorForExp(double epsilon, Double uzel[], double delta,
+                                              Function<Double, Double> uDer, int N, Function<Double, Double> u) {
 
-            if (uzel[i] <= delta) {
-                uNorm[i] = 0.;
-            }
-        }
-        double max = 0;
-        for (int i = 0; i < N + 1; i++) {
-            if (uNorm[i] > max) max = uNorm[i];
-        }
-        return max;
+        // Вычисляем в точке x=0 (как в статье)
+        double x0 = 0.0;
+        double result = Math.abs(
+                u.apply(x0 + delta)   // u(x+δ)
+                        - u.apply(x0)         // - u(x)
+                        - delta * uDer.apply(x0)  // - δ·u'(x)
+        );
+
+        return result;
     }
 
 
@@ -197,5 +210,38 @@ public class SimpleFormulas {
         }
         return max;
     }
+
+//    public double classicTrailingTeylorSimple(double epsilon, Double uzel[], double delta,
+//        Function<Double, Double> uDer, int N, Function<Double, Double> u) {
+//
+//        // Вычисляем в точке x=0 (как в статье)
+//        double x0 = 0.0;
+//
+//        // Δ₁¹: |u(x+δ) - u(x) - δ·u'(x)|
+//        double result = Math.abs(
+//            u.apply(x0 + delta)    // u(x+δ)
+//            - u.apply(x0)          // - u(x)
+//            - delta * uDer.apply(x0)  // - δ·u'(x)
+//        );
+//
+//        return result;
+//    }
+//
+//    public double modifiedTrailingTeylorSimple(double epsilon, Double uzel[], double delta,
+//        Function<Double, Double> uDer, Function<Double, Double> uSecDer,
+//        int N, Function<Double, Double> u,
+//        Function<Double, Double> Phi, Function<Double, Double> PhiDer, Function<Double, Double> PhiSecDer) {
+//
+//        // Вычисляем в точке x=0
+//        double x0 = 0.0;
+//
+//        // Δ₂¹: |u(x+δ) - u(x) - δ·u'(x) - [Φ(x+δ)-Φ(x)-δ·Φ'(x)]·u''(x)/Φ''(x)|
+//        double term1 = u.apply(x0 + delta) - u.apply(x0) - delta * uDer.apply(x0);
+//
+//        double phiTerm = Phi.apply(x0 + delta) - Phi.apply(x0) - delta * PhiDer.apply(x0);
+//        double correction = phiTerm * uSecDer.apply(x0) / PhiSecDer.apply(x0);
+//
+//        return Math.abs(term1 - correction);
+//    }
 }
 
