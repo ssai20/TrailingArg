@@ -85,8 +85,8 @@ public class TrailingArg {
                         -Math.exp((finalD - x) / finalE) - Math.cos(Math.PI * (x - finalD) / 2.);
                 Function<Double, Double> Phi = x -> Math.exp(-x / finalE);
 //                    Double[] h = GridDesign.setkaShishkina(e, n);
-                    Double[] h = GridDesign.setkaBakhvalova(e, n);
-//                    Double[] h = GridDesign.ravnomSetka(n);
+//                    Double[] h = GridDesign.setkaBakhvalova(e, n);
+                    Double[] h = GridDesign.ravnomSetka(n);
                 ArrayList<Double[]> listClassic = differenceScheme.ABCF(e, h, d, function, 0, Phi);
                 ArrayList<Double[]> listModificated = differenceScheme.ABCF(e, h, d, function, 1, Phi);
                 Double[] uzel = differenceScheme.findPoints(h);
@@ -108,12 +108,12 @@ public class TrailingArg {
         }
 
 
-        Latex latex = new Latex("/home/funforces/Articles/Trailing/доклад/результаты/2feb2026/bahval-delta-0-128-2048-old.tex");
+        Latex latex = new Latex("/home/funforces/Articles/Trailing/доклад/результаты/2feb2026/rn-delta-0-128-2048-old-26.tex");
 //        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/new - 000 epsilon-03-bahvalov-1000uzlov - 1000-0200-0.tex");
 //        Latex latex = new Latex("/Users/work/Desktop/Аспирантура/Programms/TrailingArgByTeylorModificationFormulas/latex/Oh2001.tex");
         latex.latexHeadDocument();
 
-        latex.latexTableInitial("сетка Бахвалова $\\delta = 0$");
+        latex.latexTableInitial("сетка Равномерная $\\delta = 0.$");
 
         latex.latexTable(classic, modified);
 

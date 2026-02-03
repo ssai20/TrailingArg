@@ -35,44 +35,45 @@ public class GridDesign {
 
 //        System.out.println("Bakhvalov mesh");
         Double uzelx[] = new Double[N + 1];
-        Double sigma1;
+        Double sigma;
         Double[] h = new Double[N + 1];
 
         if (epsilon <= Math.exp(-1)) {
-            sigma1 = Math.min(0.5, (-4.) * epsilon * Math.log(epsilon) / 1.);
+            sigma = Math.min(0.5, (-4.) * epsilon * Math.log(epsilon));
 
-            if (sigma1 == 0.5) {
+            if (sigma == 0.5) {
                 uzelx[0] = 0.;
+                h[N]=1./N;
                 for (int i = 1; i <= N; i++) {
                     h[i - 1] = 1. / N;
                     uzelx[i] = uzelx[i - 1] + h[i - 1];
                 }
             }
 
-            if (sigma1 < 0.5) {
+            if (sigma < 0.5) {
                 uzelx[0] = 0.;
                 for (int i = 1; i <= N / 2; i++) {
                     uzelx[i] = (-4. * epsilon) * Math.log(1. - 2. * (1. - epsilon) * i / N);
                 }
                 for (int i = N / 2; i <= N; i++) {
-                    uzelx[i] = sigma1 + (2. * i / N - 1.) * (1. - sigma1);
+                    uzelx[i] = sigma + (2. * i / N - 1.) * (1. - sigma);
                 }
 
                 for (int i = 1; i <= N; i++) {
                     h[i - 1] = uzelx[i] - uzelx[i - 1];
                 }
+                h[N]=1. - uzelx[N];
             }
         }
 
-        if (epsilon > Math.exp(-1)) {
-            sigma1 = 0.5;
-
+        if (epsilon > Math.exp(-1.)) {
+            sigma = 0.5;
             uzelx[0] = 0.;
+            h[N]=1./N;
             for (int i = 1; i < N + 1; i++) {
                 h[i - 1] = 1. / N;
-                uzelx[i] = uzelx[i - 1] + h[i - 1];
+                uzelx[i] = uzelx[i - 1] + h[i-1];
             }
-
         }
 
 
@@ -99,17 +100,17 @@ public class GridDesign {
 //            }
 //        }
 
-        h[N] = 1 - uzelx[N];
+//        h[N] = 1. - uzelx[N];
         return h;
     }
 
-    public static void findPoints(int N, Double[] h, Double[] uzel) {
-        uzel[0] = 0.;
-        for (int i = 1; i < N + 1; i++) {
-            uzel[i] = uzel[i - 1] + h[i];
-//            System.out.println(uzel[i]);
-        }
-    }
+//    public static void findPoints(int N, Double[] h, Double[] uzel) {
+//        uzel[0] = 0.;
+//        for (int i = 1; i < N + 1; i++) {
+//            uzel[i] = uzel[i - 1] + h[i];
+////            System.out.println(uzel[i]);
+//        }
+//    }
 
 
     public static void findFunction(int N, Double[] f, Double[] uzel, Function<Double, Double> function) {
