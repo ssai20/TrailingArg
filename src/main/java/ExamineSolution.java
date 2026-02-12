@@ -1,41 +1,46 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
-public class ExamineSolution {
-//    public static void findS(int L, int N, Double[] uzel, Double[] x, Double[] f, Double[] S, Double[] h, Double[] hh, Double[] c){
-//        Double hh=1./L;
-//        Double[] hh = ravnomSetka(L);
-//        x[0]=0.;
+//import java.math.BigDecimal;
+//import java.math.MathContext;
+//import java.math.RoundingMode;
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.function.Function;
 //
-//        for(int k=1;k<L+1;k++){
-//            x[k]=x[k-1]+hh[k];
+//class ExamineSolution {
+//    public BigDecimal errorNorm(BigDecimal[] u, int N, Function<BigDecimal, BigDecimal> solution, BigDecimal[] uzel) {
+//        MathContext mc = new MathContext(20, RoundingMode.HALF_UP);
+//
+//        List<BigDecimal> norm = new ArrayList<>();
+//        BigDecimal[] res = new BigDecimal[N + 1];
+//        BigDecimal norma = BigDecimal.ZERO;
+//
+//        for (int i = 1; i < N; i++) {
+//            BigDecimal exact = solution.apply(uzel[i]);
+//            res[i] = exact.subtract(u[i], mc).abs();
 //        }
 //
-//        for(int i=0;i<N+1;i++){
-//            for (int k=0;k<L;k++){
-//                // if ( ((x[k]>=uzel[i])&&(x[k]<uzel[i+1]))||(x[k]==1.) )
-//                if  ((x[k]>=uzel[i])&&(x[k]<uzel[i+1]))
-//                {
-//
-//                    //  cout<<"x["<<k<<"] ="<<x[k]<<" popal v "<<"[ uzel["<<i<<"]; uzel["<<i+1<<"] ) = "<<uzel[i]<<";"<<uzel[i+1]<<endl;
-//                    //cout<<x[k]<<" popal v "<<"[" <<uzel[i]<<";"<< uzel[i+1]<< ")"<<endl;
-//                    //if (k==L) {cout<<"!!!!"<<endl;}
-////                    S[k]=  f[i]+ ( (f[i]-f[i-1])/h + h*(2*c[i]+c[i-1])/3. )*(x[k]-uzel[i]) + c[i] * (x[k]-uzel[i])*(x[k]-uzel[i]) + ( (c[i]-c[i-1])/(3.*h) )*(x[k]-uzel[i])*(x[k]-uzel[i])*(x[k]-uzel[i]);
-////                    S[k]=  f[i+1]+ ( (f[i+1]-f[i])/h + h*(2*c[i+1]+c[i])/3 )*(x[k]-uzel[i]) + c[i+1] * (x[k]-uzel[i])*(x[k]-uzel[i]) + ( (c[i+1]-c[i])/(3*h) )*(x[k]-uzel[i])*(x[k]-uzel[i])*(x[k]-uzel[i]);
-//
-////                    S[k] = (uzel[i+1] - x[k])*(uzel[i+1] - x[k])*(uzel[i+1] - x[k])*c[i]/(6*h) + (x[k] - uzel[i])*(x[k] - uzel[i])*(x[k] - uzel[i])*c[i+1]/(6*h) + (f[i+1]/h - c[i+1]*h/6.)*(x[k] - uzel[i]) + (f[i]/h - c[i]*h/6.)*(uzel[i+1] - x[k]);
-//
-//                    S[k] = (uzel[i+1] - x[k])*(uzel[i+1] - x[k])*(uzel[i+1] - x[k])*c[i]/(6.*h[i+1]) + (x[k] - uzel[i])*(x[k] - uzel[i])*(x[k] - uzel[i])*c[i+1]/(6.*h[i+1]) + (f[i+1]/h[i+1] - c[i+1]*h[i+1]/6.)*(x[k] - uzel[i]) + (f[i]/h[i+1] - c[i]*h[i+1]/6.)*(uzel[i+1] - x[k]);
-////
-////                    System.out.println("S["+k+"] = "+S[k]);
-//                }
+//        for (int i = 1; i < N; i++) {
+//            if (res[i].compareTo(norma) > 0) {
+//                norma = res[i];
 //            }
 //        }
 //
-//        S[L] = (uzel[N] - x[L])*(uzel[N] - x[L])*(uzel[N] - x[L])*c[N]/(6*h[N]) + (x[L] - uzel[N-1])*(x[L] - uzel[N-1])*(x[L] - uzel[N-1])*c[N]/(6*h[N]) + (f[N]/h[N] - c[N]*h[N]/6)*(x[L] - uzel[N-1]) + (f[N-1]/h[N] - c[N-1]*h[N]/6.)*(uzel[N] - x[L]);
-//
+//        System.out.println("norma[" + N + "] = " + norma);
+//        norm.add(norma);
+//        return norma;
 //    }
+//}
+
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+import java.util.function.Function;
+
+public class ExamineSolution {
+
 
     public Double errorNorm(Double[] u, int N, Function<Double, Double> solution, Double[] uzel) {
         List<Double> norm = new ArrayList<>();

@@ -192,3 +192,6 @@ public class Latex {
         process2.destroy();
     }
 }
+//        Latex latex = new Latex("/home/funforces/Articles/Trailing/доклад/результаты/12feb2026/bh-delta-0eps1-00-1-08-N-128-2048-2.tex");
+////        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/new - 000 epsilon-03-bahvalov-1000uzlov - 1000-0200-0.tex");
+////        Latex latex = new Latex("/Users/work/Desktop/Аспирантура/Programms/TrailingArgByTeylorModificationFormulas/latex/Oh2001.tex");
