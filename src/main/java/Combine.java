@@ -49,3 +49,4 @@
 //            latex.latexTableEnd();
 //        }
 //}
+//Latex latex = new Latex("/home/funforces/Articles/Trailing/доклад/результаты/5feb2026/rn-delta-0-128-2048-old-104.tex");

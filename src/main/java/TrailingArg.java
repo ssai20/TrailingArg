@@ -43,12 +43,12 @@ public class TrailingArg {
 //        System.out.println("error STRAIGHT SIMPLE equation with Teylor classic formulas Second derivative = " + simpleFormulas.classicTeylorSimpleSecondDer(epsilon, uzelSimple, delta, uSimpleDer, uSimpleSecDer, oddsNumber, uSimple));
 //        System.out.println("error STRAIGHT SIMPLE equation with Teylor modified formulas Second derivative = " + simpleFormulas.modifiedTeylorSimpleSecondDer(epsilon, uzelSimple, delta, uSimpleDer, uSimpleSecDer, oddsNumber, uSimple, Phi, PhiDer, PhiSecDer));
 
-        String[][] classic = new String[5][5];
-        String[][] modified = new String[5][5];
+        String[][] classic = new String[9][5];
+        String[][] modified = new String[9][5];
         double a;
         double b;
         int i = 0;
-        for (double e = 1.; e >= 1.e-04; e = e / 10.) {
+        for (double e = 1.; e >= 1.e-08; e = e / 10.) {
             int j = 0;
             for (int n = 128; n <= 2048; n = n * 2) {
                 Double d = 0.;
@@ -78,15 +78,18 @@ public class TrailingArg {
 
 //                a = simpleFormulas.classicTrailingTeylorSimple(e, uzelSimple, d, uSimpleDer2, oddsNumber, uSimple2);
 //                b = simpleFormulas.modifiedTrailingTeylorSimple(e, uzelSimple, d, uSimpleDer2, uSimpleSecDer2, oddsNumber, uSimple2, Phi2, PhiDer2, PhiSecDer2);
+                double finalD = d;
 
                 Function<Double, Double> solution = x -> Math.cos(Math.PI * x / 2.) + Math.exp(-x / finalE);
-                double finalD = d;
                 Function<Double, Double> function = x -> -Math.cos(Math.PI * x / 2.) * (Math.PI * Math.PI * finalE / 4.) - Math.PI / 2. * Math.sin(Math.PI * x / 2.) -
                         -Math.exp((finalD - x) / finalE) - Math.cos(Math.PI * (x - finalD) / 2.);
+//                Function<Double, Double> solution = x -> Math.cos(Math.PI * x / 2.);
+//                Function<Double, Double> function = x -> -Math.cos(Math.PI * x / 2.) * (Math.PI * Math.PI * finalE / 4. +1.) - Math.PI / 2. * Math.sin(Math.PI * x / 2.);
+
                 Function<Double, Double> Phi = x -> Math.exp(-x / finalE);
 //                    Double[] h = GridDesign.setkaShishkina(e, n);
-//                    Double[] h = GridDesign.setkaBakhvalova(e, n);
-                    Double[] h = GridDesign.ravnomSetka(n);
+                    Double[] h = GridDesign.setkaBakhvalova(e, n);
+//                Double[] h = GridDesign.ravnomSetka(n);
                 ArrayList<Double[]> listClassic = differenceScheme.ABCF(e, h, d, function, 0, Phi);
                 ArrayList<Double[]> listModificated = differenceScheme.ABCF(e, h, d, function, 1, Phi);
                 Double[] uzel = differenceScheme.findPoints(h);
@@ -108,12 +111,12 @@ public class TrailingArg {
         }
 
 
-        Latex latex = new Latex("/home/funforces/Articles/Trailing/доклад/результаты/2feb2026/rn-delta-0-128-2048-old-26.tex");
+        Latex latex = new Latex("/home/funforces/Articles/Trailing/доклад/результаты/12feb2026/bh-delta-0eps1-00-1-08-N-128-2048-2.tex");
 //        Latex latex = new Latex("/home/funforces/Dissertation/TrailingArg/latex/new - 000 epsilon-03-bahvalov-1000uzlov - 1000-0200-0.tex");
 //        Latex latex = new Latex("/Users/work/Desktop/Аспирантура/Programms/TrailingArgByTeylorModificationFormulas/latex/Oh2001.tex");
         latex.latexHeadDocument();
 
-        latex.latexTableInitial("сетка Равномерная $\\delta = 0.$");
+        latex.latexTableInitial("сетка Бахвалова $\\delta = 0.$");
 
         latex.latexTable(classic, modified);
 
